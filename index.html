@@ -17,50 +17,39 @@ body{
 header{
   padding:20px;
   background:black;
-  display:flex;
-  justify-content:space-between;
 }
 
 .logo{
   color:red;
+  font-size:24px;
   font-weight:bold;
 }
 
-.cart{
-  cursor:pointer;
-}
-
-/* VIDEO HERO */
+/* HERO BACKGROUND */
 .hero{
-  position:relative;
   height:90vh;
-  overflow:hidden;
+  background: url("https://images.unsplash.com/photo-1540497077202-7c8a3999166f") center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.hero video{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
+/* DARK OVERLAY */
 .overlay{
-  position:relative;
-  z-index:2;
+  background:rgba(0,0,0,0.6);
+  padding:40px;
+  border-radius:10px;
   text-align:center;
-  top:50%;
-  transform:translateY(-50%);
 }
 
-/* ANIMATION */
+/* TEXT */
 .hero h1{
   font-size:50px;
-  animation:fade 2s ease;
 }
 
-@keyframes fade{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+.hero p{
+  color:#ccc;
+  margin-top:10px;
 }
 
 .btn{
@@ -69,6 +58,7 @@ header{
   background:red;
   border:none;
   color:white;
+  cursor:pointer;
 }
 
 /* PRODUCTS */
@@ -97,43 +87,51 @@ header{
   text-align:center;
 }
 
-button{
+.price{
+  color:red;
+  font-size:22px;
+}
+
+.buttons{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.buy{
+  flex:1;
   background:red;
   border:none;
   color:white;
   padding:10px;
-  width:100%;
-  margin-top:10px;
-  cursor:pointer;
 }
 
-/* CART PANEL */
-.cart-box{
-  position:fixed;
-  right:0;
-  top:0;
-  width:300px;
-  height:100%;
-  background:#111;
-  padding:20px;
-  display:none;
-}
-
-/* CHECKOUT */
-.checkout{
-  padding:20px;
-}
-
-input{
-  width:100%;
+.instagram{
+  flex:1;
+  background:#E1306C;
+  border:none;
+  color:white;
   padding:10px;
-  margin:10px 0;
 }
 
 /* RESPONSIVE */
 @media(min-width:768px){
   .grid{
     grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:768px){
+  .hero h1{
+    font-size:28px;
+  }
+
+  .overlay{
+    padding:20px;
+  }
+
+  .buttons{
+    flex-direction:column;
   }
 }
 </style>
@@ -143,15 +141,10 @@ input{
 
 <header>
   <div class="logo">ATLAS HUB</div>
-  <div class="cart" onclick="toggleCart()">🛒 (<span id="count">0</span>)</div>
 </header>
 
-<!-- HERO VIDEO -->
+<!-- HERO -->
 <section class="hero">
-  <video autoplay muted loop>
-    <source src="https://cdn.coverr.co/videos/coverr-working-out-with-ropes-1574/1080p.mp4">
-  </video>
-
   <div class="overlay">
     <h1>FUEL YOUR STRENGTH</h1>
     <p>Performance • Power • Style</p>
@@ -167,8 +160,13 @@ input{
   <img src="spider.png">
   <div class="card-content">
     <h2>Spider Pro</h2>
-    <p>159 DH</p>
-    <button onclick="addCart('Spider Pro')">Add to cart</button>
+    <p class="price">159 DH</p>
+    <div class="buttons">
+      <button class="buy">Buy</button>
+      <a href="https://instagram.com/atlas.hub_" target="_blank">
+        <button class="instagram">Instagram</button>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -176,51 +174,18 @@ input{
   <img src="BRODUCT.png">
   <div class="card-content">
     <h2>Iron Start</h2>
-    <p>159 DH</p>
-    <button onclick="addCart('Iron Start')">Add to cart</button>
+    <p class="price">159 DH</p>
+    <div class="buttons">
+      <button class="buy">Buy</button>
+      <a href="https://instagram.com/atlas.hub_" target="_blank">
+        <button class="instagram">Instagram</button>
+      </a>
+    </div>
   </div>
 </div>
 
 </div>
 </section>
-
-<!-- CART -->
-<div class="cart-box" id="cartBox">
-  <h3>Cart</h3>
-  <ul id="items"></ul>
-  <button onclick="showCheckout()">Checkout</button>
-</div>
-
-<!-- CHECKOUT -->
-<section class="checkout" id="checkout" style="display:none;">
-  <h2>Checkout</h2>
-  <input placeholder="Nom">
-  <input placeholder="Téléphone">
-  <input placeholder="Ville">
-  <button>Commander</button>
-</section>
-
-<script>
-let cart = [];
-
-function addCart(item){
-  cart.push(item);
-  document.getElementById("count").innerText = cart.length;
-
-  let li = document.createElement("li");
-  li.innerText = item;
-  document.getElementById("items").appendChild(li);
-}
-
-function toggleCart(){
-  let box = document.getElementById("cartBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-function showCheckout(){
-  document.getElementById("checkout").style.display = "block";
-}
-</script>
 
 </body>
 </html>
