@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,134 +7,48 @@
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-
 body{
-background:#000;
+background:black;
 color:white;
+font-family:Arial;
+padding:20px;
 }
 
-/* 🔥 BACKGROUND */
-body::before{
-content:"";
-position:fixed;
-width:500px;
-height:500px;
-background:red;
-filter:blur(200px);
-opacity:0.2;
-top:20%;
-left:30%;
-z-index:-1;
-}
-
-/* 🔥 HERO */
 .hero{
-padding:60px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
+margin-bottom:30px;
 }
 
 .hero img{
-width:280px;
-border-radius:15px;
-box-shadow:0 0 30px red;
+width:250px;
+border-radius:10px;
+box-shadow:0 0 20px red;
 }
 
-.hero h1{
-font-size:45px;
-}
-
-/* 🔍 SEARCH */
-.search input{
-padding:12px;
-border-radius:8px;
-border:none;
-background:#111;
-color:white;
-}
-
-/* 🧠 CATEGORY */
-.categories{
-padding:0 8%;
-margin-bottom:20px;
-}
-
-.categories button{
-margin-right:10px;
-padding:8px 15px;
-background:#111;
-border:1px solid red;
-color:white;
-border-radius:20px;
-cursor:pointer;
-}
-
-/* 🔥 NEWS */
 .container{
-padding:20px 8%;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
 }
 
 .card{
 background:#111;
-padding:20px;
-border-radius:15px;
+padding:15px;
+border-radius:10px;
 transition:0.3s;
 }
 
 .card:hover{
-transform:scale(1.03);
-box-shadow:0 0 20px red;
+box-shadow:0 0 15px red;
 }
 
-.summary{
-color:#aaa;
-font-size:14px;
-margin-top:10px;
-}
-
-button.read{
-margin-top:10px;
+button{
 background:none;
 border:none;
 color:red;
 cursor:pointer;
-}
-
-/* 🔥 MODAL */
-#modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.95);
-justify-content:center;
-align-items:center;
-}
-
-.modal-box{
-background:#111;
-padding:30px;
-border-radius:15px;
-max-width:600px;
-width:90%;
-animation:zoom 0.3s;
-}
-
-@keyframes zoom{
-from{transform:scale(0.5);opacity:0;}
-to{transform:scale(1);opacity:1;}
-}
-
-.close{
-cursor:pointer;
-float:right;
 }
 
 </style>
@@ -142,104 +56,54 @@ float:right;
 
 <body>
 
-<section class="hero">
+<div class="hero">
 <img src="CPR 2.png">
-
-<div>
 <h1>🔥 Cyber AI News</h1>
-
-<div class="search">
-<input id="search" placeholder="Search...">
-</div>
-</div>
-</section>
-
-<!-- 🧠 CATEGORY -->
-<div class="categories">
-<button onclick="filterCategory('all')">All</button>
-<button onclick="filterCategory('hack')">Hacking</button>
-<button onclick="filterCategory('malware')">Malware</button>
-<button onclick="filterCategory('ai')">AI</button>
 </div>
 
-<!-- NEWS -->
 <div id="news" class="container"></div>
-
-<!-- MODAL -->
-<div id="modal">
-<div class="modal-box">
-<span class="close" onclick="closeModal()">✖</span>
-<h2 id="m-title"></h2>
-<p id="m-date"></p>
-<p id="m-desc"></p>
-</div>
-</div>
 
 <script>
 
-let allNews=[];
-
-fetch("https://api.rss2json.com/v1/api.json?rss_url=https://feeds.feedburner.com/TheHackersNews")
-.then(res=>res.json())
-.then(data=>{
-allNews=data.items;
-display(allNews);
-});
-
-function getSummary(text){
-return text.replace(/<[^>]*>/g,'').substring(0,120)+"...";
+/* 🔥 DEMO DATA (باش يبان الموقع خدام) */
+const demoNews = [
+{
+title:"Critical vulnerability found in Linux systems",
+date:"2026",
+desc:"This vulnerability allows attackers to gain root access..."
+},
+{
+title:"New malware targeting Android users",
+date:"2026",
+desc:"A dangerous malware spreading through fake apps..."
+},
+{
+title:"AI used in cyber attacks increasing rapidly",
+date:"2026",
+desc:"Hackers now using AI to automate attacks..."
 }
+];
 
-function detectCategory(title){
-title=title.toLowerCase();
-if(title.includes("hack")) return "hack";
-if(title.includes("malware")) return "malware";
-if(title.includes("ai")) return "ai";
-return "other";
-}
-
-function display(list){
-let c=document.getElementById("news");
+function display(news){
+let c = document.getElementById("news");
 c.innerHTML="";
 
-list.forEach(item=>{
-let cat=detectCategory(item.title);
-
-c.innerHTML+=`
-<div class="card" data-cat="${cat}">
-<h3>${item.title}</h3>
-<p>${item.pubDate}</p>
-<p class="summary">🤖 AI Summary: ${getSummary(item.description)}</p>
-<button class="read" onclick="openModal('${item.title}','${item.pubDate}',\`${item.description}\`)">
-Read more →
-</button>
+news.forEach(n=>{
+c.innerHTML += `
+<div class="card">
+<h3>${n.title}</h3>
+<p>${n.date}</p>
+<button onclick="openModal('${n.title}','${n.desc}')">Read more →</button>
 </div>
 `;
 });
 }
 
-/* 🔍 SEARCH */
-document.getElementById("search").addEventListener("input",e=>{
-let v=e.target.value.toLowerCase();
-display(allNews.filter(n=>n.title.toLowerCase().includes(v)));
-});
+display(demoNews);
 
-/* 🧠 FILTER */
-function filterCategory(cat){
-if(cat==="all"){display(allNews);return;}
-display(allNews.filter(n=>detectCategory(n.title)===cat));
-}
-
-/* 🔥 MODAL */
-function openModal(t,d,desc){
-modal.style.display="flex";
-m-title.innerText=t;
-m-date.innerText=d;
-m-desc.innerHTML=desc;
-}
-
-function closeModal(){
-modal.style.display="none";
+/* 🔥 MODAL SIMPLE */
+function openModal(t,d){
+alert(t + "\n\n" + d);
 }
 
 </script>
