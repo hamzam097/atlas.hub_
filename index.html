@@ -11,40 +11,23 @@ body{
   color:white;
 }
 
-/* HEADER */
 header{
   padding:20px;
   color:red;
   font-weight:bold;
-  font-size:22px;
 }
 
-/* HERO */
 .hero{
-  height:90vh;
+  height:70vh;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
-
-  background:
-  linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+  background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
   url("https://images.unsplash.com/photo-1540497077202-7c8a3999166f");
-
   background-size:cover;
-  background-position:center;
 }
 
-.hero h1{
-  font-size:50px;
-}
-
-.hero p{
-  color:#ccc;
-}
-
-/* PRODUCTS */
 .products{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -57,13 +40,6 @@ header{
   padding:20px;
   border-radius:15px;
   text-align:center;
-  transition:0.3s;
-  border:1px solid #222;
-}
-
-.card:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px red;
 }
 
 .card img{
@@ -71,34 +47,16 @@ header{
   border-radius:10px;
 }
 
-.card h3{
-  margin:10px 0;
-}
-
 .card p{
   color:red;
-  font-weight:bold;
 }
 
-/* BUTTON */
 button{
   background:red;
-  color:white;
   border:none;
   padding:10px;
+  color:white;
   cursor:pointer;
-  border-radius:5px;
-  font-weight:bold;
-}
-
-button:hover{
-  background:#ff2a2a;
-}
-
-.section-title{
-  padding-left:40px;
-  color:red;
-  font-size:22px;
 }
 </style>
 </head>
@@ -107,75 +65,45 @@ button:hover{
 
 <header>ATLAS HUB</header>
 
-<!-- HERO -->
 <section class="hero">
   <h1>FUEL YOUR STRENGTH 💪</h1>
-  <p>Performance • Power • Style</p>
 </section>
-
-<!-- ===== CREATINE ===== -->
-<h2 class="section-title">SUPPLEMENTS</h2>
 
 <section class="products">
 
 <div class="card">
-  <img src="creatine 1.png">
+  <a href="product1.html">
+    <img src="creatine 1.png">
+  </a>
   <h3>Creatine Basic</h3>
   <p>400 DH</p>
-  <button onclick="order('Creatine Basic')">Commander</button>
 </div>
 
 <div class="card">
-  <img src="creatine 2.png">
+  <a href="product2.html">
+    <img src="creatine 2.png">
+  </a>
   <h3>Creatine Pro</h3>
   <p>400 DH</p>
-  <button onclick="order('Creatine Pro')">Commander</button>
 </div>
 
 <div class="card">
-  <img src="creatine 3.png">
+  <a href="product3.html">
+    <img src="creatine 3.png">
+  </a>
   <h3>Creatine Max</h3>
   <p>400 DH</p>
-  <button onclick="order('Creatine Max')">Commander</button>
 </div>
 
 <div class="card">
-  <img src="creatine 4.png">
+  <a href="product4.html">
+    <img src="creatine 4.png">
+  </a>
   <h3>Creatine Pure</h3>
   <p>200 DH</p>
-  <button onclick="order('Creatine Pure')">Commander</button>
 </div>
 
 </section>
-
-<!-- ===== TSHIRTS ===== -->
-<h2 class="section-title">GYM WEAR</h2>
-
-<section class="products">
-
-<div class="card">
-  <img src="spider.png">
-  <h3>Spider Pro</h3>
-  <p>159 DH</p>
-  <button onclick="order('Spider Pro')">Commander</button>
-</div>
-
-<div class="card">
-  <img src="BRODUCT.png">
-  <h3>Iron Start</h3>
-  <p>159 DH</p>
-  <button onclick="order('Iron Start')">Commander</button>
-</div>
-
-</section>
-
-<!-- SCRIPT -->
-<script>
-function order(product){
-  let msg = "سلام، بغيت نكوموندي: " + product;
-  window.open("https://www.instagram.com/atlas.hub_/?text=" + encodeURIComponent(msg));
-}
-</script>
 
 </body>
 </html>
