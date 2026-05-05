@@ -1,42 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<title>Cyber News</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security News</title>
+
 <style>
+
 body{
+    margin:0;
+    font-family:Arial;
     background:black;
     color:white;
-    font-family:Arial;
-    padding:20px;
+}
+
+/* 🔥 HERO */
+.hero{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:40px;
+    background:linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.6)), url("cyber-bg.png");
+    background-size:cover;
+    background-position:center;
+}
+
+/* LEFT IMAGE */
+.hero img{
+    width:250px;
+    border-radius:10px;
+}
+
+/* TEXT */
+.hero-text{
+    max-width:600px;
+}
+
+.hero-text h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.hero-text p{
+    color:#ccc;
+}
+
+/* 🔥 NEWS */
+.news-container{
+    padding:30px;
 }
 
 .news{
     background:#111;
     margin:15px 0;
-    padding:15px;
-    border-radius:10px;
+    padding:20px;
+    border-radius:12px;
+    transition:0.3s;
 }
 
-a{
+.news:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 15px red;
+}
+
+.news a{
     color:red;
     text-decoration:none;
 }
+
+/* 📱 MOBILE */
+@media(max-width:768px){
+    .hero{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .hero img{
+        margin-bottom:20px;
+        width:200px;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🔥 Cyber Security News</h1>
+<!-- 🔥 HERO -->
+<section class="hero">
 
-<div id="news"></div>
+    <!-- LEFT IMAGE -->
+    <img src="cyber.png">
+
+    <!-- TEXT -->
+    <div class="hero-text">
+        <h1>🔥 Cyber Security News</h1>
+        <p>Latest hacking, malware & cybersecurity updates</p>
+    </div>
+
+</section>
+
+<!-- 🔥 NEWS -->
+<div class="news-container" id="news"></div>
 
 <script>
+
 fetch("https://api.rss2json.com/v1/api.json?rss_url=https://feeds.feedburner.com/TheHackersNews")
 .then(res => res.json())
 .then(data => {
+
     let container = document.getElementById("news");
 
     data.items.forEach(item => {
+
         container.innerHTML += `
         <div class="news">
             <h3>${item.title}</h3>
@@ -44,8 +120,11 @@ fetch("https://api.rss2json.com/v1/api.json?rss_url=https://feeds.feedburner.com
             <a href="${item.link}" target="_blank">Read more</a>
         </div>
         `;
+
     });
+
 });
+
 </script>
 
 </body>
