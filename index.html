@@ -20,30 +20,25 @@ header{
   font-weight:bold;
 }
 
-/* HERO VIDEO */
+/* HERO */
 .hero{
-  position:relative;
   height:90vh;
-  overflow:hidden;
-}
-
-.hero video{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.hero-content{
-  position:relative;
-  z-index:2;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  top:40%;
-  transform:translateY(-50%);
+
+  background:
+  linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+  url("https://images.unsplash.com/photo-1540497077202-7c8a3999166f");
+
+  background-size:cover;
+  background-position:center;
 }
 
 .hero h1{
-  font-size:60px;
+  font-size:50px;
   animation:fade 2s;
 }
 
@@ -71,6 +66,7 @@ header{
   border-radius:15px;
   text-align:center;
   transition:0.3s;
+  border:1px solid #222;
 }
 
 .card:hover{
@@ -80,6 +76,7 @@ header{
 
 .card img{
   width:100%;
+  border-radius:10px;
 }
 
 .card p{
@@ -87,12 +84,19 @@ header{
   font-weight:bold;
 }
 
+/* BUTTON */
 button{
   background:red;
   color:white;
   border:none;
   padding:10px;
   cursor:pointer;
+  border-radius:5px;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#ff2a2a;
 }
 
 /* CART */
@@ -116,6 +120,10 @@ button{
   color:red;
 }
 
+.section-title{
+  padding-left:40px;
+  color:red;
+}
 </style>
 </head>
 
@@ -126,33 +134,64 @@ button{
   <button onclick="toggleCart()">🛒</button>
 </header>
 
-<!-- HERO VIDEO -->
+<!-- HERO -->
 <section class="hero">
-  <video autoplay muted loop>
-    <source src="https://cdn.coverr.co/videos/coverr-man-training-hard-5176/1080p.mp4">
-  </video>
-
-  <div class="hero-content">
-    <h1>FUEL YOUR STRENGTH 💪</h1>
-    <p>Performance • Power • Style</p>
-  </div>
+  <h1>FUEL YOUR STRENGTH 💪</h1>
+  <p>Performance • Power • Style</p>
 </section>
 
-<!-- PRODUCTS -->
+<!-- ===== CREATINE ===== -->
+<h2 class="section-title">SUPPLEMENTS</h2>
+
 <section class="products">
 
 <div class="card">
   <img src="creatine 1.png">
-  <h3>Optimum Nutrition</h3>
+  <h3>Creatine Basic</h3>
   <p>400 DH</p>
-  <button onclick="addCart('Optimum Nutrition',400)">Add to cart</button>
+  <button onclick="addCart('Creatine Basic',400)">Add to cart</button>
 </div>
+
+<div class="card">
+  <img src="creatine 2.png">
+  <h3>Creatine Pro</h3>
+  <p>400 DH</p>
+  <button onclick="addCart('Creatine Pro',400)">Add to cart</button>
+</div>
+
+<div class="card">
+  <img src="creatine 3.png">
+  <h3>Creatine Max</h3>
+  <p>400 DH</p>
+  <button onclick="addCart('Creatine Max',400)">Add to cart</button>
+</div>
+
+<div class="card">
+  <img src="creatine 4.png">
+  <h3>Creatine Pure</h3>
+  <p>200 DH</p>
+  <button onclick="addCart('Creatine Pure',200)">Add to cart</button>
+</div>
+
+</section>
+
+<!-- ===== TSHIRTS ===== -->
+<h2 class="section-title">GYM WEAR</h2>
+
+<section class="products">
 
 <div class="card">
   <img src="spider.png">
   <h3>Spider Pro</h3>
   <p>159 DH</p>
   <button onclick="addCart('Spider Pro',159)">Add to cart</button>
+</div>
+
+<div class="card">
+  <img src="BRODUCT.png">
+  <h3>Iron Start</h3>
+  <p>159 DH</p>
+  <button onclick="addCart('Iron Start',159)">Add to cart</button>
 </div>
 
 </section>
@@ -192,12 +231,12 @@ function renderCart(){
 }
 
 function checkout(){
-  let text = "Commande:\n";
+  let text = "Commande:%0A";
   cart.forEach(i=>{
-    text += i.name + " - " + i.price + " DH\n";
+    text += i.name + " - " + i.price + " DH%0A";
   });
 
-  window.open("https://www.instagram.com/atlas.hub_/?text=" + encodeURIComponent(text));
+  window.open("https://www.instagram.com/atlas.hub_/");
 }
 
 </script>
