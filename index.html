@@ -15,76 +15,77 @@ body {
 
 /* HEADER */
 header {
-  display:flex;
-  justify-content:space-between;
-  padding:15px 20px;
+  padding:20px;
   background:black;
 }
 
 .logo {
   color:red;
+  font-size:24px;
   font-weight:bold;
 }
 
-.cart-btn {
-  background:red;
-  padding:8px 15px;
-  cursor:pointer;
-}
-
-/* HERO */
-.hero {
-  padding:40px;
-}
-
 /* PRODUCTS */
+.products {
+  padding:30px;
+}
+
+/* GRID */
 .grid {
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
-  padding:20px;
+  grid-template-columns:1fr;
+  gap:40px;
 }
 
+/* CARD */
 .card {
   background:#111;
-  padding:10px;
-  border-radius:10px;
+  border-radius:15px;
+  overflow:hidden;
 }
 
+/* IMAGE */
 .card img {
   width:100%;
+  height:auto;
+  display:block;
 }
 
-button {
-  width:100%;
-  margin-top:5px;
-  padding:8px;
+/* CONTENT */
+.card-content {
+  padding:20px;
+  text-align:center;
+}
+
+.price {
+  color:red;
+  font-size:22px;
+  margin:10px 0;
+}
+
+/* BUTTONS */
+.buttons {
+  display:flex;
+  gap:10px;
+}
+
+.buy {
+  flex:1;
+  background:red;
   border:none;
+  color:white;
+  padding:12px;
   cursor:pointer;
 }
 
-.buy { background:red; color:white; }
-
-/* CART */
-.cart {
-  position:fixed;
-  top:0;
-  right:-100%;
-  width:300px;
-  height:100%;
-  background:black;
-  padding:20px;
-  transition:0.3s;
+.instagram {
+  flex:1;
+  background:#E1306C;
+  border:none;
+  color:white;
+  padding:12px;
+  cursor:pointer;
 }
-
-.cart.active {
-  right:0;
-}
-
-.cart h2 {
-  color:red;
-}
-
 </style>
 
 </head>
@@ -93,71 +94,45 @@ button {
 
 <header>
   <div class="logo">ATLAS HUB</div>
-  <div class="cart-btn" onclick="toggleCart()">Cart 🛒</div>
 </header>
+
+<section class="products">
 
 <div class="grid">
 
+<!-- SPIDER -->
 <div class="card">
-  <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e">
-  <h3>Iron Start</h3>
-  <p>299 DH</p>
-  <button class="buy" onclick="addToCart('Iron Start',299)">Add to cart</button>
+  <img src="spider.png">
+  <div class="card-content">
+    <h2>Spider Pro</h2>
+    <p class="price">159 DH</p>
+    <div class="buttons">
+      <button class="buy">Buy</button>
+      <a href="https://instagram.com/atlas.hub_" target="_blank">
+        <button class="instagram">Instagram</button>
+      </a>
+    </div>
+  </div>
 </div>
 
+<!-- IRON -->
 <div class="card">
-  <img src="https://images.unsplash.com/photo-1600180758890-6c9c6b5c92f1">
-  <h3>Spider Pro</h3>
-  <p>160 DH</p>
-  <button class="buy" onclick="addToCart('Spider Pro',160)">Add to cart</button>
+  <img src="BRODUCT.png">
+  <div class="card-content">
+    <h2>Iron Start</h2>
+    <p class="price">159 DH</p>
+    <div class="buttons">
+      <button class="buy">Buy</button>
+      <a href="https://instagram.com/atlas.hub_" target="_blank">
+        <button class="instagram">Instagram</button>
+      </a>
+    </div>
+  </div>
 </div>
 
 </div>
 
-<!-- CART -->
-<div class="cart" id="cart">
-  <h2>Cart</h2>
-  <div id="cart-items"></div>
-  <h3 id="total">Total: 0 DH</h3>
-
-  <button onclick="orderIG()">Commander via Instagram</button>
-</div>
-
-<script>
-let cart = [];
-
-function toggleCart(){
-  document.getElementById("cart").classList.toggle("active");
-}
-
-function addToCart(name, price){
-  cart.push({name, price});
-  displayCart();
-}
-
-function displayCart(){
-  let items = document.getElementById("cart-items");
-  let total = 0;
-  items.innerHTML = "";
-
-  cart.forEach(item=>{
-    items.innerHTML += `<p>${item.name} - ${item.price} DH</p>`;
-    total += item.price;
-  });
-
-  document.getElementById("total").innerText = "Total: " + total + " DH";
-}
-
-function orderIG(){
-  let message = "Bonjour, je veux commander :%0A";
-
-  cart.forEach(item=>{
-    message += "- " + item.name + "%0A";
-  });
-
-  window.open("https://instagram.com/atlas.hub_", "_blank");
-}
-</script>
+</section>
 
 </body>
 </html>
