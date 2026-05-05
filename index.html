@@ -7,78 +7,148 @@
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
 body{
-    margin:0;
-    font-family:Arial;
-    background:black;
-    color:white;
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
+/* 🔥 BACKGROUND */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background:radial-gradient(circle at center, #111 0%, #000 80%);
+z-index:-2;
+}
+
+/* 🔥 GLOW EFFECT */
+.bg::before{
+content:"";
+position:absolute;
+width:600px;
+height:600px;
+background:red;
+filter:blur(200px);
+opacity:0.2;
+top:20%;
+left:30%;
 }
 
 /* 🔥 HERO */
 .hero{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:40px;
-    background:linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.6)), url("cyber-bg.png");
-    background-size:cover;
-    background-position:center;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:60px 8%;
+min-height:60vh;
 }
 
-/* LEFT IMAGE */
 .hero img{
-    width:250px;
-    border-radius:10px;
+width:320px;
+border-radius:15px;
+box-shadow:0 0 40px red;
+animation:float 3s ease-in-out infinite;
 }
 
-/* TEXT */
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
+}
+
 .hero-text{
-    max-width:600px;
+max-width:500px;
 }
 
 .hero-text h1{
-    font-size:40px;
-    margin-bottom:10px;
+font-size:50px;
+margin-bottom:10px;
+background:linear-gradient(to right, white, red);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .hero-text p{
-    color:#ccc;
+color:#aaa;
+margin-bottom:20px;
+}
+
+/* 🔥 SEARCH */
+.search{
+margin-top:20px;
+}
+
+.search input{
+padding:12px;
+width:250px;
+border:none;
+border-radius:8px;
+outline:none;
+background:#111;
+color:white;
 }
 
 /* 🔥 NEWS */
-.news-container{
-    padding:30px;
+.container{
+padding:40px 8%;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
 }
 
-.news{
-    background:#111;
-    margin:15px 0;
-    padding:20px;
-    border-radius:12px;
-    transition:0.3s;
+.card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-radius:15px;
+padding:20px;
+transition:0.3s;
+border:1px solid rgba(255,0,0,0.2);
 }
 
-.news:hover{
-    transform:scale(1.02);
-    box-shadow:0 0 15px red;
+.card:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 0 25px red;
 }
 
-.news a{
-    color:red;
-    text-decoration:none;
+.card h3{
+margin-bottom:10px;
+}
+
+.card p{
+color:#aaa;
+margin-bottom:10px;
+}
+
+.card a{
+color:red;
+text-decoration:none;
 }
 
 /* 📱 MOBILE */
 @media(max-width:768px){
-    .hero{
-        flex-direction:column;
-        text-align:center;
-    }
+.hero{
+flex-direction:column;
+text-align:center;
+}
 
-    .hero img{
-        margin-bottom:20px;
-        width:200px;
-    }
+.hero img{
+margin-bottom:20px;
+width:220px;
+}
+
+.hero-text h1{
+font-size:35px;
+}
+
 }
 
 </style>
@@ -86,43 +156,63 @@ body{
 
 <body>
 
+<div class="bg"></div>
+
 <!-- 🔥 HERO -->
 <section class="hero">
 
-    <!-- LEFT IMAGE -->
-    <img src="cyber.png">
+<img src="CPR 2.png">
 
-    <!-- TEXT -->
-    <div class="hero-text">
-        <h1>🔥 Cyber Security News</h1>
-        <p>Latest hacking, malware & cybersecurity updates</p>
-    </div>
+<div class="hero-text">
+<h1>🔥 Cyber Security News</h1>
+<p>Latest hacking, malware & cyber threats in real-time</p>
+
+<div class="search">
+<input type="text" id="search" placeholder="Search news...">
+</div>
+
+</div>
 
 </section>
 
 <!-- 🔥 NEWS -->
-<div class="news-container" id="news"></div>
+<section class="container" id="news"></section>
 
 <script>
+
+let allNews = [];
 
 fetch("https://api.rss2json.com/v1/api.json?rss_url=https://feeds.feedburner.com/TheHackersNews")
 .then(res => res.json())
 .then(data => {
 
-    let container = document.getElementById("news");
+allNews = data.items;
+displayNews(allNews);
 
-    data.items.forEach(item => {
+});
 
-        container.innerHTML += `
-        <div class="news">
-            <h3>${item.title}</h3>
-            <p>${item.pubDate}</p>
-            <a href="${item.link}" target="_blank">Read more</a>
-        </div>
-        `;
+function displayNews(list){
+let container = document.getElementById("news");
+container.innerHTML = "";
 
-    });
+list.forEach(item => {
+container.innerHTML += `
+<div class="card">
+<h3>${item.title}</h3>
+<p>${item.pubDate}</p>
+<a href="${item.link}" target="_blank">Read more →</a>
+</div>
+`;
+});
+}
 
+/* 🔍 SEARCH */
+document.getElementById("search").addEventListener("input", function(){
+let value = this.value.toLowerCase();
+
+let filtered = allNews.filter(n => n.title.toLowerCase().includes(value));
+
+displayNews(filtered);
 });
 
 </script>
