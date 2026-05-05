@@ -1,178 +1,205 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ATLAS HUB</title>
+<title>ATLAS HUB</title>
 
-  <style>
-    body {
-      margin:0;
-      font-family: Arial;
-      background:black;
-      color:white;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+}
 
-    header {
-      padding:20px;
-      font-size:24px;
-      color:red;
-      font-weight:bold;
-    }
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
+  color:red;
+  font-weight:bold;
+}
 
-    .hero {
-      height:70vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
+/* HERO VIDEO */
+.hero{
+  position:relative;
+  height:90vh;
+  overflow:hidden;
+}
 
-      background:
-      linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
-      url("https://images.unsplash.com/photo-1599058917765-a780eda07a3e");
+.hero video{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-      background-size:cover;
-      background-position:center;
-    }
+.hero-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  top:40%;
+  transform:translateY(-50%);
+}
 
-    .hero h1 {
-      font-size:50px;
-    }
+.hero h1{
+  font-size:60px;
+  animation:fade 2s;
+}
 
-    .hero p {
-      color:#aaa;
-    }
+.hero p{
+  color:#ccc;
+  animation:fade 3s;
+}
 
-    .products {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:20px;
-      padding:40px;
-    }
+@keyframes fade{
+  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1; transform:translateY(0);}
+}
 
-    .card {
-      background:#111;
-      padding:20px;
-      border-radius:15px;
-      text-align:center;
-      transition:0.3s;
-      border:1px solid #222;
-    }
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  padding:40px;
+}
 
-    .card:hover {
-      transform:scale(1.05);
-      box-shadow:0 0 20px red;
-    }
+.card{
+  background:#111;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+  transition:0.3s;
+}
 
-    .card img {
-      width:100%;
-      border-radius:10px;
-    }
+.card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px red;
+}
 
-    .card h2 {
-      margin:10px 0;
-    }
+.card img{
+  width:100%;
+}
 
-    .card p {
-      color:red;
-      font-size:20px;
-      font-weight:bold;
-    }
+.card p{
+  color:red;
+  font-weight:bold;
+}
 
-    button {
-      background:red;
-      color:white;
-      border:none;
-      padding:10px 20px;
-      margin-top:10px;
-      cursor:pointer;
-      border-radius:5px;
-      font-weight:bold;
-    }
+button{
+  background:red;
+  color:white;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+}
 
-    button:hover {
-      background:#ff2a2a;
-    }
+/* CART */
+.cart{
+  position:fixed;
+  right:0;
+  top:0;
+  width:300px;
+  height:100%;
+  background:#111;
+  padding:20px;
+  transform:translateX(100%);
+  transition:0.3s;
+}
 
-    .section-title {
-      padding-left:40px;
-      font-size:22px;
-      margin-top:20px;
-      color:red;
-    }
+.cart.active{
+  transform:translateX(0);
+}
 
-  </style>
+.cart h2{
+  color:red;
+}
+
+</style>
 </head>
 
 <body>
 
-<header>ATLAS HUB</header>
+<header>
+  ATLAS HUB
+  <button onclick="toggleCart()">🛒</button>
+</header>
 
+<!-- HERO VIDEO -->
 <section class="hero">
-  <h1>FUEL YOUR STRENGTH 💪</h1>
-  <p>Gym Wear - Supplements - Accessories</p>
+  <video autoplay muted loop>
+    <source src="https://cdn.coverr.co/videos/coverr-man-training-hard-5176/1080p.mp4">
+  </video>
+
+  <div class="hero-content">
+    <h1>FUEL YOUR STRENGTH 💪</h1>
+    <p>Performance • Power • Style</p>
+  </div>
 </section>
 
-<!-- ===== CREATINE ===== -->
-<h2 class="section-title">SUPPLEMENTS</h2>
-
+<!-- PRODUCTS -->
 <section class="products">
 
-  <div class="card">
-    <img src="creatine 1.png">
-    <h2>Optimum Nutrition Creatine</h2>
-    <p>400 DH</p>
-    <button onclick="order('Optimum Nutrition Creatine')">Commander</button>
-  </div>
+<div class="card">
+  <img src="creatine 1.png">
+  <h3>Optimum Nutrition</h3>
+  <p>400 DH</p>
+  <button onclick="addCart('Optimum Nutrition',400)">Add to cart</button>
+</div>
 
-  <div class="card">
-    <img src="creatine 2.png">
-    <h2>BioTechUSA Creatine</h2>
-    <p>400 DH</p>
-    <button onclick="order('BioTechUSA Creatine')">Commander</button>
-  </div>
-
-  <div class="card">
-    <img src="creatine 3.png">
-    <h2>MyMuscle Creatine</h2>
-    <p>400 DH</p>
-    <button onclick="order('MyMuscle Creatine')">Commander</button>
-  </div>
-
-  <div class="card">
-    <img src="creatine 4.png">
-    <h2>HX Nutrition Creatine</h2>
-    <p>200 DH</p>
-    <button onclick="order('HX Nutrition Creatine')">Commander</button>
-  </div>
+<div class="card">
+  <img src="spider.png">
+  <h3>Spider Pro</h3>
+  <p>159 DH</p>
+  <button onclick="addCart('Spider Pro',159)">Add to cart</button>
+</div>
 
 </section>
 
-<!-- ===== T-SHIRTS ===== -->
-<h2 class="section-title">GYM WEAR</h2>
-
-<section class="products">
-
-  <div class="card">
-    <img src="spider.png">
-    <h2>Spider Pro T-Shirt</h2>
-    <p>159 DH</p>
-    <button onclick="order('Spider Pro T-Shirt')">Commander</button>
-  </div>
-
-  <div class="card">
-    <img src="BRODUCT.png">
-    <h2>Iron Start T-Shirt</h2>
-    <p>159 DH</p>
-    <button onclick="order('Iron Start T-Shirt')">Commander</button>
-  </div>
-
-</section>
+<!-- CART -->
+<div class="cart" id="cart">
+  <h2>Cart</h2>
+  <div id="cart-items"></div>
+  <h3 id="total">Total: 0 DH</h3>
+  <button onclick="checkout()">Checkout</button>
+</div>
 
 <script>
-function order(product){
-  let msg = "سلام، بغيت نكوموندي: " + product;
-  window.open("https://www.instagram.com/atlas.hub_/?text=" + encodeURIComponent(msg));
+
+let cart = [];
+
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("active");
 }
+
+function addCart(name,price){
+  cart.push({name,price});
+  renderCart();
+}
+
+function renderCart(){
+  let items = document.getElementById("cart-items");
+  items.innerHTML = "";
+  let total = 0;
+
+  cart.forEach(item=>{
+    items.innerHTML += "<p>"+item.name+" - "+item.price+" DH</p>";
+    total += item.price;
+  });
+
+  document.getElementById("total").innerText = "Total: "+total+" DH";
+}
+
+function checkout(){
+  let text = "Commande:\n";
+  cart.forEach(i=>{
+    text += i.name + " - " + i.price + " DH\n";
+  });
+
+  window.open("https://www.instagram.com/atlas.hub_/?text=" + encodeURIComponent(text));
+}
+
 </script>
 
 </body>
